@@ -1,0 +1,96 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form method="post" enctype="multipart/form-data" id="uploadForm">
+    <div class="row">
+        <div class="col-md-12">
+            <input type="file" id="fUpload" name="files" multiple class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding-top:10px;">
+            <input type="button" id="btnUpload" value="Upload" />
+        </div>
+    </div>
+</form>
+
+<div id="message" class="text-center" style="padding-top: 10px;"></div>
+<div id="downloadLink" class="text-center" style="padding-top: 10px;"></div>
+
+<script>
+    document.getElementById("btnUpload").addEventListener("click",function () {
+        var fileInput = document.getElementById("fUpload");
+        var files = fileInput.files;
+
+        if (files.length === 0) {
+            alert("Please select a file.");
+            return;
+        }
+
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+        }
+
+        // Get the anti-forgery token (if using anti-forgery protection)
+        var antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+        formData.append('__RequestVerificationToken', antiForgeryToken);
+
+        $.ajax({
+            url: "/Index?handler=Upload",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+
+                "RequestVerificationToken": antiForgeryToken
+            },
+            success: function (result) {
+                debugger;
+                var successCount = result.successCount;
+                var failureCount = result.failureCount;
+                var excelFile = result.excelFile;
+
+                var message = successCount + " record" + (successCount !== 1 ? "s" : "") + " successfully added and " + failureCount + " record" + (failureCount !== 1 ? "s" : "") + " failed.";
+                document.getElementById("message").innerText = message;
+
+                document.getElementById("downloadLink").innerHTML = "";
+
+                if (result.failureCount > 0) {
+                    // Create a download link for the Excel file
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + result.excelFile;
+                    downloadLink.download = "FailureRecords.xlsx";
+                    downloadLink.innerText = "Download Excel File";
+                    downloadLink.title = "Click to Download the Error List";
+
+                    // Append the download link to the "downloadLink" div
+                    document.getElementById("downloadLink").appendChild(downloadLink);
+
+                    // Create a message element
+                    var message = document.createElement("span");
+                    message.innerText = "Click on the link to Download the Error List";
+                    message.style.marginLeft = "10px"; // Optional: Add some spacing between the link and the message
+
+                    // Append the message element next to the download link
+                    document.getElementById("downloadLink").appendChild(message);
+                }
+
+            },
+            error: function (err) {
+                alert("File upload failed.");
+            }
+        });
+    });
+</script>
+
+

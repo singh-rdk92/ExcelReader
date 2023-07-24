@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upload_Excel", "Upload_Excel\Upload_Excel.csproj", "{C048C784-85E2-4ED6-A119-597FE2D0B676}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C048C784-85E2-4ED6-A119-597FE2D0B676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C048C784-85E2-4ED6-A119-597FE2D0B676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C048C784-85E2-4ED6-A119-597FE2D0B676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C048C784-85E2-4ED6-A119-597FE2D0B676}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFF72C2D-9C4A-450E-94A6-4E821F88EF77}
+	EndGlobalSection
+EndGlobal
